@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://i.imgur.com/U3LVVc7.png">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.1.1/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/css-footer.css}">
+    <title>Crear Cita</title>
+</head>
+<body class="background-custom">
+<header th:replace="layout/plantilla :: header"></header>
+<section th:replace="layout/plantilla :: mainClientes"></section>
+<section style="color:dark"; class="table-dark">
+    <div class="container ">
+        <div class="abs-center ">
+            <div class="col-md-12 ">
+                <div class="well well-sm">
+                    <form class="form-horizontal" method="post" th:action ="@{/guardarCita}" th:object="${citaId}">
+                        <input type="hidden" name="idCita" th:field="*{idCita}"/>
+                        <br>
+                        <div class="form-group d-flex justify-content-center">
+                            <div class="col-md-8">
+                                <input class="form-control" placeholder="Fecha Cita" type="date" name="fecha" th:field="*{fecha}" required/>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group d-flex justify-content-center">
+                            <div class="col-md-8">
+                                <input class="form-control" placeholder="Hora Cita" type="time" name="hora" th:field="*{hora}" required/>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group d-flex justify-content-center">
+                            <div class="col-md-8">
+                                <select class="form-select" th:field="*{medico.idMedico}" name="medicoCita" required>
+                                    <option value="0" selected>Seleccione Medico</option>
+                                    <option th:each="medico : ${medicoCita}"
+                                            th:value="${medico.idMedico}"
+                                            th:text="${medico.nombre}"
+                                    ></option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group d-flex justify-content-center">
+                            <div class="col-md-12 text-center">
+                                <input type="submit" class="btn btn-primary btn-lg" name="guardar" value="Guardar"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<footer th:replace="layout/plantilla :: footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+</body>
+
+</html>

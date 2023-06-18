@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://i.imgur.com/U3LVVc7.png">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.1.1/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/css/css-footer.css}">
+    <title>Lista de Empleados</title>
+</head>
+<body class="background-custom">
+<header th:replace="layout/plantilla :: header"></header>
+<section th:replace="layout/plantilla :: mainClientes"></section>
+<br>
+<br>
+<section>
+    <div class="container">
+        <div class="card">
+            <h4 class="card-title">Lista de pacientes</h4>
+            <div class="card-body">
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Direccion</th>
+                            <th scope="col">Fecha Creacion</th>
+                            <th scope="col">Fecha Ultimo Ingreso</th>
+                            <th scope="col" sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+                            <th scope="col" sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr sec:authorize="isAuthenticated()" th:each="paciente : ${pacienteGet}">
+                            <td th:text=${paciente.nombre}></td>
+                            <td th:text=${paciente.apellido}></td>
+                            <td th:text=${paciente.correo}></td>
+                            <td th:text=${paciente.telefono}></td>
+                            <td th:text=${paciente.direccion}></td>
+                            <td th:text=${paciente.fechaCreacion}></td>
+                            <td th:text=${paciente.fechaUltimoIngreso}></td>
+                            <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/editarPaciente/} + ${paciente.idPaciente}" th:text="Editar"></a></td>
+                            <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/eliminarpaciente/} + ${paciente.idPaciente}" th:text="Eliminar"></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-4 m-4">
+    <div class="container" sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="row">
+            <div class="col-md-4">
+                <a th:href="@{/paciente/modificarPaciente}" class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i>
+                    <span>Agregar</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<footer th:replace="layout/plantilla :: footer"></footer>
+<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
+</body>
+</html>
