@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,13 @@ public class medicoController {
     public String getListaMedico(Model model){
         LOG.log(Level.INFO, "getListaMedico");
         List<medico> medicos = medicoService.findAll();
-        model.addAttribute("medicosGet", medicos);
+        List<medico> listMedico = new ArrayList<>();
+        for (int i = 0; i < medicos.size() ; i++) {
+            if(!medicos.get(i).getNombre().equals("Diego")){
+                listMedico.add(medicos.get(i));
+            }
+        }
+        model.addAttribute("medicosGet", listMedico);
         return "medico/listaMedicos";
     }
     @GetMapping("/medico/modificarMedico")
